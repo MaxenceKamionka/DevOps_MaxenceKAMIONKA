@@ -5,7 +5,9 @@ services:
       - front
       - back
     depends_on:
-      - database
+      database:
+        restart: true
+        condition: service_healthy
     environment:
       - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
@@ -18,6 +20,12 @@ services:
       - back
     volumes:
       - pg-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
 
   httpd:
     build: ./http
@@ -27,6 +35,7 @@ services:
       - front
     depends_on:
       - simpleapi
+
 
 networks:
   front:
