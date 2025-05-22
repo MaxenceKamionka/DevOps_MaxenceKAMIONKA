@@ -1,0 +1,45 @@
+services:
+  simpleapi:
+    build: ./simpleapi
+    networks:
+      - front
+      - back
+    depends_on:
+      database:
+        restart: true
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=${SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT}
+
+  database:
+    build: ./pg-database
+    networks:
+      - back
+    volumes:
+      - pg-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+  httpd:
+    build: ./http
+    ports:
+      - 8100:80
+    networks:
+      - front
+    depends_on:
+      - simpleapi
+
+
+networks:
+  front:
+  back:
+
+volumes:
+  pg-db-data:
