@@ -1,4 +1,7 @@
+# Nom du workflow, tel qu’il apparaîtra dans l'onglet Actions
 name: CI devops 2025
+
+# Trigger à chaque push vers main/develop ou sur les pull_request
 on:
   #to begin you want to launch this job in main and develop
   push:
@@ -8,7 +11,9 @@ on:
   pull_request:
 
 jobs:
+  # job nommé "test-backend"
   test-backend: 
+     # L'environnement sur lequel le job s'exécutera
     runs-on: ubuntu-24.04
     steps:
      #checkout your github code using actions/checkout@v4
@@ -24,3 +29,4 @@ jobs:
      #finally build your app with the latest command
       - name: Build and test with Maven
         run: mvn clean verify
+        working-directory: TP2/simple-api # Chemin relatif vers le module Maven à tester
