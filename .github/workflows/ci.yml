@@ -39,6 +39,7 @@ jobs:
          -Dsonar.host.url=https://sonarcloud.io 
          -Dsonar.login=${{ secrets.SONAR_TOKEN }}  
          --file ../../TP2/simple-api/pom.xml
+        working-directory: TP2/simple-api
 
 
         
