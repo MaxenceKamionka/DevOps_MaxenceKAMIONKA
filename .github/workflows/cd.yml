@@ -9,37 +9,6 @@ on:
       - main
 
 jobs:
-  # job nommé "test-backend"
-  test-backend: 
-     # L'environnement sur lequel le job s'exécutera
-    runs-on: ubuntu-24.04
-    steps:
-     #checkout your github code using actions/checkout@v4
-      - uses: actions/checkout@v4
-
-     #do the same with another action (actions/setup-java@v4) that enable to setup jdk 21
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-
-     #build app
-      - name: Build and test with Maven
-        run: mvn clean verify
-        working-directory: TP2/simple-api # Chemin relatif vers le module Maven à tester
-
-      - name: Run SonarCloud analysis
-        # lancer maven, compilation, test et vérification du projet, lancement de l'analyse de Sonar
-        run: mvn -B verify sonar:sonar 
-         -Dsonar.projectKey=MaxenceKamionka_DevOps_MaxenceKAMIONKA 
-         -Dsonar.organization=maxencekamionka 
-         -Dsonar.host.url=https://sonarcloud.io 
-         -Dsonar.login=${{ secrets.SONAR_TOKEN }}  
-         --file ../../TP2/simple-api/pom.xml
-
-        working-directory: TP2/simple-api
-
   # define job to build and publish docker image
   build-and-push-docker-image:
    needs: test-backend
