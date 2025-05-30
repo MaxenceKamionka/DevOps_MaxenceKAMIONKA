@@ -3,14 +3,16 @@ name: CD devops 2025
 
 # Trigger à chaque push vers main/develop ou sur les pull_request
 on:
-  #to begin you want to launch this job in main and develop
-  push:
-    branches: 
-      - main
+  workflow_run:
+    workflows: ["CI devops 2025"]  
+    types:
+      - completed
 
 jobs:
   # define job to build and publish docker image
   build-and-push-docker-image:
+   # On fait ce job si le workflow "CI devops réussi" et si il a été run sur la branche main
+   if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
    # run only when code is compiling and tests are passing
    runs-on: ubuntu-24.04
   
