@@ -30,7 +30,7 @@ class DepartmentsServiceTest {
     @Test
     void testGetDepartmentByName() {
         when(departmentDAO.findDepartmentByName("DepartmentTest")).thenReturn(DEPARTMENT);
-        assertEquals(DEPARTMENT, departmentDAO.findDepartmentByName("DepartmentTestblabla"));
+        assertEquals(DEPARTMENT, departmentDAO.findDepartmentByName("DepartmentTest"));
     }
 
     @Test
