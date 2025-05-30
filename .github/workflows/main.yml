@@ -30,12 +30,13 @@ jobs:
         working-directory: TP2/simple-api # Chemin relatif vers le module Maven à tester
 
       - name: Run SonarCloud analysis
+        # lancer maven, compilation, test et vérification du projet, lancement de l'analyse de Sonar
         run: mvn -B verify sonar:sonar 
          -Dsonar.projectKey=MaxenceKamionka_DevOps_MaxenceKAMIONKA 
          -Dsonar.organization=maxencekamionka 
          -Dsonar.host.url=https://sonarcloud.io 
          -Dsonar.login=${{ secrets.SONAR_TOKEN }}  
-         --file ./simple-api/pom.xml
+         --file ./TP2/simple-api/pom.xml
 
         working-directory: TP2/simple-api
 
