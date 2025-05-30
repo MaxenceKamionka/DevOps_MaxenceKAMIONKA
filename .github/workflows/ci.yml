@@ -7,6 +7,7 @@ on:
   push:
     branches: 
       - develop
+      - main
   pull_request:
 
 jobs:
@@ -25,7 +26,19 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-     #finally build your app with the latest command
+     #build app
       - name: Build and test with Maven
         run: mvn clean verify
         working-directory: TP2/simple-api # Chemin relatif vers le module Maven à tester
+
+      - name: Run SonarCloud analysis
+        # lancer maven, compilation, test et vérification du projet, lancement de l'analyse de Sonar
+        run: mvn -B verify sonar:sonar 
+         -Dsonar.projectKey=MaxenceKamionka_DevOps_MaxenceKAMIONKA 
+         -Dsonar.organization=maxencekamionka 
+         -Dsonar.host.url=https://sonarcloud.io 
+         -Dsonar.login=${{ secrets.SONAR_TOKEN }}  
+         --file ../../TP2/simple-api/pom.xml
+
+
+        
