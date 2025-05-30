@@ -24,7 +24,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-     #finally build your app with the latest command
+     #build app
       - name: Build and test with Maven
         run: mvn clean verify
         working-directory: TP2/simple-api # Chemin relatif vers le module Maven à tester
