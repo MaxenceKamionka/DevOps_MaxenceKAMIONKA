@@ -1,0 +1,10 @@
+- name: Lancer le conteneur httpd
+  docker_container:
+    name: httpd
+    image: maxencekamionka/tp-devops-http-server
+    state: started
+    restart_policy: always
+    networks:
+      - frontend_backend_network
+    ports:
+      - "80:80"
