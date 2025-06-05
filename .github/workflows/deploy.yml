@@ -29,6 +29,8 @@ jobs:
           playbook: remove_containers.yml
           inventory: inventories/setup.yml
           directory: TP3/ansible
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: "False"
 
       - name: Deploiement
         # GitHub Action pour run Ansible playbook
@@ -37,6 +39,11 @@ jobs:
           playbook: playbook.yml
           inventory: inventories/setup.yml
           directory: TP3/ansible
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: "False"
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       
       
       
