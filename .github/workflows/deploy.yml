@@ -20,17 +20,15 @@ jobs:
         # GitHub Action pour run Ansible playbook
         uses: dawidd6/action-ansible-playbook@v3
         with:
-          playbook: remove_containers.yml
-          inventory: inventories/setup.yml
-          working-directory: TP3/ansible
+          playbook: ../../TP3/ansible/remove_containers.yml
+          inventory: ../../TP3/ansible/inventories/setup.yml
 
       - name: Deploiement
         # GitHub Action pour run Ansible playbook
         uses: dawidd6/action-ansible-playbook@v3
         with:
-          playbook: playbook.yml
-          inventory: inventories/setup.yml
-          working-directory: TP3/ansible
+          playbook: ../../TP3/ansible/playbook.yml
+          inventory: ../../TP3/ansible/inventories/setup.yml
       
       
       
