@@ -1,1 +1,1 @@
-ansible/roles/*/vars/main.yml
+/ansible/env.yml

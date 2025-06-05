@@ -1,6 +1,8 @@
 - hosts: all                     # Cibler tous les hosts du groupe all (inventory)
   gather_facts: true             # Récupère les facts
   become: true                   # Superuser
+  vars_files:
+    - env.yml
 
   roles:
     - docker
