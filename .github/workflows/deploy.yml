@@ -26,6 +26,12 @@ jobs:
         run: |
           cd TP3/ansible
           ansible-playbook -i inventories/setup.yml playbook.yml
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: "False"
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          
   
       
       
