@@ -16,6 +16,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          # Private SSH key to register in the SSH agen
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Supprimer les conteneurs
         # GitHub Action pour run Ansible playbook
         uses: dawidd6/action-ansible-playbook@v3
