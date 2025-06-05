@@ -1,0 +1,36 @@
+name: Deploiement sur le serveur
+
+on:
+  workflow_run:
+    workflows: ["CD devops 2025"] 
+    types:
+      - completed
+
+jobs:
+  # On fait ce job si le workflow "CD devops 2025" réussi et s'il a été run sur la branche main (implicitement par rapport aux autres workflows définis)
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Supprimer les conteneurs
+        # GitHub Action pour run Ansible playbook
+        uses: dawidd6/action-ansible-playbook@v3
+        with:
+          playbook: remove_containers.yml
+          inventory: inventories/setup.yml
+          working-directory: TP3/ansible
+
+      - name: Deploiement
+        # GitHub Action pour run Ansible playbook
+        uses: dawidd6/action-ansible-playbook@v3
+        with:
+          playbook: playbook.yml
+          inventory: inventories/setup.yml
+          working-directory: TP3/ansible
+      
+      
+      
