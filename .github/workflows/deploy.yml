@@ -22,26 +22,21 @@ jobs:
           # Private SSH key to register in the SSH agen
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Supprimer les conteneurs
-        # GitHub Action pour run Ansible playbook
-        uses: dawidd6/action-ansible-playbook@v3
-        with:
-          playbook: remove_containers.yml
-          inventory: inventories/setup.yml
-          directory: TP3/ansible
+      - name: Supprimer les anciens conteneurs
+        run: |
+          cd TP3/ansible
+          ansible-playbook -i inventories/setup.yml remove_containers.yml
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
 
-      - name: Deploiement
-        # GitHub Action pour run Ansible playbook
-        uses: dawidd6/action-ansible-playbook@v3
-        with:
-          playbook: playbook.yml
-          inventory: inventories/setup.yml
-          directory: TP3/ansible
+      - name: Déployer les conteneurs
+        run: |
+          cd TP3/ansible
+          ansible-playbook -i inventories/setup.yml playbook.yml
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
-          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       
