@@ -2,6 +2,7 @@
   docker_container:
     name: database
     image: maxencekamionka/tp-devops-database
+    pull: true
     state: started
     restart_policy: always
     env:
